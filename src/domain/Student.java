@@ -1,24 +1,23 @@
 package domain;
 import domain.exceptions.EnrollmentRulesViolationException;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
 
 public class Student {
 	private String id;
 	private String name;
 
 	static class CourseSection {
-		CourseSection(Course course, int section) {
-			this.course = course;
-			this.section = section;
-		}
-
-		Course course;
-		int section;
-	}
+        CourseSection(Course course, int section) {
+            this.course = course;
+            this.section = section;
+        }
+        Course course;
+	    int section;
+    }
 
 	private Map<Term, Map<Course, Double>> transcript;
 	private List<CourseSection> currentTerm;
@@ -29,7 +28,7 @@ public class Student {
 		this.transcript = new HashMap<>();
 		this.currentTerm = new ArrayList<>();
 	}
-
+	
 	public void takeCourse(Course course, int section) {
 		currentTerm.add(new CourseSection(course, section));
 	}
@@ -39,23 +38,23 @@ public class Student {
 	}
 
 	public void addTranscriptRecord(Course course, Term term, double grade) {
-		if (!transcript.containsKey(term))
-			transcript.put(term, new HashMap<>());
-		transcript.get(term).put(course, grade);
-	}
+	    if (!transcript.containsKey(term))
+	        transcript.put(term, new HashMap<>());
+	    transcript.get(term).put(course, grade);
+    }
 
-	public List<CourseSection> getCurrentTerm() {
-		return currentTerm;
-	}
+    public List<CourseSection> getCurrentTerm() {
+        return currentTerm;
+    }
 
-	public String getId() {
+    public String getId() {
 		return id;
 	}
 
 	public String getName() {
 		return name;
 	}
-
+	
 	public String toString() {
 		return name;
 	}
@@ -78,15 +77,15 @@ public class Student {
 		}
 	}
 
-		public double getGpa () {
-			double points = 0;
-			int totalUnits = 0;
-			for (Map.Entry<Term, Map<Course, Double>> tr : transcript.entrySet()) {
-				for (Map.Entry<Course, Double> r : tr.getValue().entrySet()) {
-					points += r.getValue() * r.getKey().getUnits();
-					totalUnits += r.getKey().getUnits();
-				}
+	public double getGpa() {
+		double points = 0;
+		int totalUnits = 0;
+		for (Map.Entry<Term, Map<Course, Double>> tr : transcript.entrySet()) {
+			for (Map.Entry<Course, Double> r : tr.getValue().entrySet()) {
+				points += r.getValue() * r.getKey().getUnits();
+				totalUnits += r.getKey().getUnits();
 			}
-			return points / totalUnits;
 		}
+		return points / totalUnits;
 	}
+}
